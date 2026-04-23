@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Glassmorphic & vibrant E2EE messenger design system.
+   All colors are HSL. Themeable at runtime via ThemeProvider. */
+
+@layer base {
+  :root {
+    /* Theme-editable tokens (overridden by ThemeProvider) */
+    --background: 240 30% 98%;
+    --foreground: 240 25% 10%;
+
+    --primary: 268 88% 62%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 285 95% 70%;
+
+    --accent: 192 95% 58%;
+    --accent-foreground: 240 25% 10%;
+
+    --bubble-sent: 268 88% 62%;
+    --bubble-sent-foreground: 0 0% 100%;
+    --bubble-received: 240 25% 98%;
+    --bubble-received-foreground: 240 25% 12%;
+
+    /* Derived surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 240 25% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 25% 10%;
+
+    --secondary: 240 20% 94%;
+    --secondary-foreground: 240 25% 15%;
+
+    --muted: 240 20% 94%;
+    --muted-foreground: 240 10% 45%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 20% 88%;
+    --input: 240 20% 90%;
+    --ring: 268 88% 62%;
+
+    --radius: 1.25rem;
+
+    /* Glass surfaces */
+    --glass: 0 0% 100%;
+    --glass-foreground: 240 25% 10%;
+    --glass-border: 240 30% 90%;
+
+    /* Mesh gradient backdrop */
+    --mesh-1: 268 95% 75%;
+    --mesh-2: 192 95% 70%;
+    --mesh-3: 330 95% 75%;
+    --mesh-4: 45 95% 75%;
+
+    /* Effects */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary-glow)));
+    --gradient-mesh:
+      radial-gradient(at 18% 12%, hsl(var(--mesh-1) / 0.55) 0px, transparent 50%),
+      radial-gradient(at 82% 8%, hsl(var(--mesh-2) / 0.45) 0px, transparent 55%),
+      radial-gradient(at 75% 88%, hsl(var(--mesh-3) / 0.5) 0px, transparent 55%),
+      radial-gradient(at 18% 82%, hsl(var(--mesh-4) / 0.4) 0px, transparent 55%);
+
+    --shadow-glass: 0 8px 32px -8px hsl(var(--primary) / 0.25);
+    --shadow-bubble: 0 4px 20px -8px hsl(var(--primary) / 0.35);
+    --shadow-float: 0 20px 60px -20px hsl(var(--primary) / 0.45);
+
+    --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .dark {
+    --background: 240 30% 6%;
+    --foreground: 240 15% 96%;
+
+    --card: 240 25% 10%;
+    --card-foreground: 240 15% 96%;
+    --popover: 240 25% 10%;
+    --popover-foreground: 240 15% 96%;
+
+    --secondary: 240 20% 14%;
+    --secondary-foreground: 240 15% 96%;
+    --muted: 240 20% 14%;
+    --muted-foreground: 240 10% 65%;
+
+    --bubble-received: 240 20% 14%;
+    --bubble-received-foreground: 240 15% 96%;
+
+    --border: 240 20% 18%;
+    --input: 240 20% 18%;
+
+    --glass: 240 25% 12%;
+    --glass-foreground: 240 15% 96%;
+    --glass-border: 240 20% 22%;
+  }
+
+  /* High contrast mode forces strong borders + bold text on glass */
+  .high-contrast {
+    --glass-border: 240 50% 30%;
+    --border: 240 50% 30%;
+    --muted-foreground: 240 10% 25%;
+  }
+  .high-contrast.dark {
+    --muted-foreground: 240 10% 80%;
+    --glass-border: 240 30% 70%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html, body, #root {
+    height: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-image: var(--gradient-mesh);
+    background-attachment: fixed;
+  }
+  .font-display {
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .glass {
+    background: hsl(var(--glass) / 0.55);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid hsl(var(--glass-border) / 0.6);
+    box-shadow: var(--shadow-glass);
+  }
+  .glass-strong {
+    background: hsl(var(--glass) / 0.78);
+    backdrop-filter: blur(32px) saturate(200%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%);
+    border: 1px solid hsl(var(--glass-border) / 0.7);
+    box-shadow: var(--shadow-float);
+  }
+  .high-contrast .glass,
+  .high-contrast .glass-strong {
+    background: hsl(var(--background));
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-width: 2px;
+  }
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hidden::-webkit-scrollbar { display: none; }
+  .scrollbar-hidden { scrollbar-width: none; }
+}
